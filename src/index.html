@@ -5,31 +5,275 @@
     <link rel="icon" href="./assets/img/4geeks.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hello Rigo with Vanilla.js</title>
-
-    <!-- Fontawesome is our recomended library for icons -->
+    
+    <!-- Fontawesome is our recommended library for icons -->
     <link
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
       integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
       crossorigin="anonymous"
     />
+    
+    <style>
+      body {
+        background: linear-gradient(135deg, #2c3e50, #34495e);
+        min-height: 100vh;
+        font-family: Arial, sans-serif;
+        color: white;
+      }
+      
+      .card {
+        width: 200px;
+        height: 280px;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        margin: 20px auto;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 20px;
+        font-size: 24px;
+        font-weight: bold;
+        transition: transform 0.3s ease;
+      }
+      
+      .card:hover {
+        transform: scale(1.05);
+      }
+      
+      .card .top-left {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        line-height: 1;
+      }
+      
+      .card .bottom-right {
+        position: absolute;
+        bottom: 15px;
+        right: 15px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        line-height: 1;
+        transform: rotate(180deg);
+      }
+      
+      .card .center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex: 1;
+        font-size: 60px;
+      }
+      
+      .heart, .diamond {
+        color: #e74c3c;
+      }
+      
+      .spade, .club {
+        color: #2c3e50;
+      }
+      
+      .controls {
+        margin: 20px 0;
+      }
+      
+      .controls button {
+        background: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 0 10px;
+        font-size: 16px;
+        transition: background 0.3s ease;
+      }
+      
+      .controls button:hover {
+        background: #2980b9;
+      }
+      
+      .size-controls {
+        margin: 20px 0;
+      }
+      
+      .size-controls input {
+        margin: 0 5px;
+        padding: 5px 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 80px;
+        text-align: center;
+      }
+      
+      .timer-display {
+        font-size: 18px;
+        margin: 10px 0;
+        color: #ecf0f1;
+      }
+      
+      h1 {
+        color: white;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      }
+    </style>
   </head>
   <body>
-    <!-- Write your HTML code here, you can delete everything withing the body tags -->
+    <!-- Write your HTML code here, you can delete everything within the body tags -->
     <div class="container-fluid text-center">
-      <h1 class="mt-5">Hello Rigo!</h1>
-      <img src="./assets/img/rigo-baby.jpg" />
-      <p class="alert alert-warning mt-4">
-        If this text is <b>not</b> centered and <b>yellow</b>, you probably have
-        an error
-      </p>
+      <h1 class="mt-5">🃏 Generador de Cartas Aleatorio</h1>
+      
+      <!-- Card container -->
+      <div id="cardContainer">
+        <div id="card" class="card">
+          <div class="top-left">
+            <span id="topValue">A</span>
+            <span id="topSuit">♠</span>
+          </div>
+          <div class="center">
+            <span id="centerSuit">♠</span>
+          </div>
+          <div class="bottom-right">
+            <span id="bottomValue">A</span>
+            <span id="bottomSuit">♠</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Controls -->
+      <div class="controls">
+        <button onclick="generateNewCard()">
+          <i class="fas fa-sync-alt"></i> Nueva Carta
+        </button>
+        <button onclick="toggleTimer()" id="timerBtn">
+          <i class="fas fa-play"></i> Iniciar Timer (10s)
+        </button>
+      </div>
+      
+      <!-- Timer display -->
+      <div class="timer-display" id="timerDisplay">
+        Timer desactivado
+      </div>
+      
+      <!-- Size controls -->
+      <div class="size-controls">
+        <label style="color: white;">
+          Ancho: <input type="number" id="widthInput" value="200" min="150" max="400" onchange="updateCardSize()">px
+        </label>
+        <label style="color: white;">
+          Alto: <input type="number" id="heightInput" value="280" min="200" max="500" onchange="updateCardSize()">px
+        </label>
+      </div>
+      
       <div class="fixed-bottom p-4">
         Made with ❤️ by
-        <a href="https://www.4geeksacademy.com">4Geeks Academy</a>
+        <a href="https://www.4geeksacademy.com" style="color: white;">4Geeks Academy</a>
       </div>
     </div>
 
-    <!-- Do not delete this script tag, this is what connects your HTML with the Javascript code -->
-    <script type="module" src="/app.js"></script>
+    <script>
+      // Arrays para valores y palos
+      let cardValues = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+      let suits = [
+        { name: 'spade', symbol: '♠' },
+        { name: 'club', symbol: '♣' },
+        { name: 'heart', symbol: '♥' },
+        { name: 'diamond', symbol: '♦' }
+      ];
+      
+      let timerInterval;
+      let isTimerRunning = false;
+      let countdown = 0;
+      
+      function generateNewCard() {
+        // Generar números aleatorios
+        let randomValue = Math.floor(Math.random() * 13); // 0-12 para los valores
+        let randomSuit = Math.floor(Math.random() * 4);   // 1-4 para los palos (ajustado a 0-3)
+        
+        // Obtener valor y palo
+        let cardValue = cardValues[randomValue];
+        let suit = suits[randomSuit];
+        
+        // Actualizar elementos HTML
+        let card = document.getElementById('card');
+        let topValue = document.getElementById('topValue');
+        let topSuit = document.getElementById('topSuit');
+        let centerSuit = document.getElementById('centerSuit');
+        let bottomValue = document.getElementById('bottomValue');
+        let bottomSuit = document.getElementById('bottomSuit');
+        
+        // Limpiar clases anteriores de palos
+        card.className = 'card';
+        
+        // Agregar nueva clase de palo
+        card.classList.add(suit.name);
+        
+        // Actualizar contenido
+        topValue.textContent = cardValue;
+        topSuit.textContent = suit.symbol;
+        centerSuit.textContent = suit.symbol;
+        bottomValue.textContent = cardValue;
+        bottomSuit.textContent = suit.symbol;
+        
+        // Efecto de animación
+        card.style.transform = 'scale(0.8) rotateY(180deg)';
+        setTimeout(() => {
+          card.style.transform = 'scale(1) rotateY(0deg)';
+        }, 200);
+      }
+      
+      function toggleTimer() {
+        let timerBtn = document.getElementById('timerBtn');
+        let timerDisplay = document.getElementById('timerDisplay');
+        
+        if (!isTimerRunning) {
+          // Iniciar timer
+          isTimerRunning = true;
+          countdown = 10;
+          timerBtn.innerHTML = '<i class="fas fa-pause"></i> Detener Timer';
+          
+          timerInterval = setInterval(() => {
+            countdown--;
+            timerDisplay.textContent = `Próxima carta en: ${countdown} segundos`;
+            
+            if (countdown <= 0) {
+              generateNewCard();
+              countdown = 10;
+            }
+          }, 1000);
+          
+        } else {
+          // Detener timer
+          isTimerRunning = false;
+          clearInterval(timerInterval);
+          timerBtn.innerHTML = '<i class="fas fa-play"></i> Iniciar Timer (10s)';
+          timerDisplay.textContent = 'Timer desactivado';
+        }
+      }
+      
+      function updateCardSize() {
+        let card = document.getElementById('card');
+        let widthInput = document.getElementById('widthInput');
+        let heightInput = document.getElementById('heightInput');
+        
+        let newWidth = widthInput.value || 200;
+        let newHeight = heightInput.value || 280;
+        
+        card.style.width = newWidth + 'px';
+        card.style.height = newHeight + 'px';
+      }
+      
+      // Función onload para generar carta inicial
+      window.onload = function() {
+        generateNewCard();
+      }
+    </script>
   </body>
 </html>
