@@ -1,5 +1,108 @@
-@import "bootstrap/dist/css/bootstrap.min.css";
+body {
+  background: linear-gradient(135deg, #2c3e50, #34495e);
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  color: white;
+}
 
-body{
-    background: white;
+.card {
+  width: 200px;
+  height: 280px;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  margin: 20px auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card .top-left {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1;
+}
+
+.card .bottom-right {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1;
+  transform: rotate(180deg);
+}
+
+.card .center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  font-size: 60px;
+}
+
+.heart, .diamond {
+  color: #e74c3c;
+}
+
+.spade, .club {
+  color: #2c3e50;
+}
+
+.controls {
+  margin: 20px 0;
+}
+
+.controls button {
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 10px;
+  font-size: 16px;
+  transition: background 0.3s ease;
+}
+
+.controls button:hover {
+  background: #2980b9;
+}
+
+.size-controls {
+  margin: 20px 0;
+}
+
+.size-controls input {
+  margin: 0 5px;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 80px;
+  text-align: center;
+}
+
+.timer-display {
+  font-size: 18px;
+  margin: 10px 0;
+  color: #ecf0f1;
+}
+
+h1 {
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
