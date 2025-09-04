@@ -5,6 +5,12 @@ body {
   color: white;
 }
 
+h1 {
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Carta */
 .card {
   width: 200px;
   height: 280px;
@@ -26,6 +32,7 @@ body {
   transform: scale(1.05);
 }
 
+/* Posiciones */
 .card .top-left {
   position: absolute;
   top: 15px;
@@ -55,6 +62,7 @@ body {
   font-size: 60px;
 }
 
+/* Colores por palo */
 .heart, .diamond {
   color: #e74c3c;
 }
@@ -63,6 +71,7 @@ body {
   color: #2c3e50;
 }
 
+/* Botones */
 .controls {
   margin: 20px 0;
 }
@@ -83,6 +92,7 @@ body {
   background: #2980b9;
 }
 
+/* Inputs tamaño */
 .size-controls {
   margin: 20px 0;
 }
@@ -96,13 +106,9 @@ body {
   text-align: center;
 }
 
+/* Timer */
 .timer-display {
   font-size: 18px;
   margin: 10px 0;
   color: #ecf0f1;
-}
-
-h1 {
-  color: white;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }

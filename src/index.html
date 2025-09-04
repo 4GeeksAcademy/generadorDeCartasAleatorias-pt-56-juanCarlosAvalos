@@ -4,24 +4,23 @@
     <meta charset="UTF-8" />
     <link rel="icon" href="./assets/img/4geeks.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hello Rigo with Vanilla.js</title>
+    <title>Generador de Cartas Aleatorias</title>
     
-    <!-- Fontawesome (íconos) -->
     <link
       rel="stylesheet"
       href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
       integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
       crossorigin="anonymous"
     />
-    <!-- Estilos externos -->
-    <link rel="stylesheet" href="styles.css" />
+
+    
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div class="container-fluid text-center">
-      <h1 class="mt-5">🃏 Generador de Cartas Aleatorio</h1>
+      <h1 class="mt-5">Generador de Cartas Aleatorias</h1>
       
-      <!-- Card container -->
-      <div id="cardContainer">
+        <div id="cardContainer">
         <div id="card" class="card">
           <div class="top-left">
             <span id="topValue">A</span>
@@ -36,8 +35,7 @@
           </div>
         </div>
       </div>
-      
-      <!-- Controls -->
+        
       <div class="controls">
         <button onclick="generateNewCard()">
           <i class="fas fa-sync-alt"></i> Nueva Carta
@@ -47,28 +45,30 @@
         </button>
       </div>
       
-      <!-- Timer display -->
+     
       <div class="timer-display" id="timerDisplay">
         Timer desactivado
       </div>
       
-      <!-- Size controls -->
+      
       <div class="size-controls">
-        <label style="color: white;">
-          Ancho: <input type="number" id="widthInput" value="200" min="150" max="400" onchange="updateCardSize()">px
+        <label>
+          Ancho: 
+          <input type="number" id="widthInput" value="200" min="150" max="400" onchange="updateCardSize()">px
         </label>
-        <label style="color: white;">
-          Alto: <input type="number" id="heightInput" value="280" min="200" max="500" onchange="updateCardSize()">px
+        <label>
+          Alto: 
+          <input type="number" id="heightInput" value="280" min="200" max="500" onchange="updateCardSize()">px
         </label>
       </div>
       
       <div class="fixed-bottom p-4">
-        Made with ❤️ by
+        Realizado con amor para
         <a href="https://www.4geeksacademy.com" style="color: white;">4Geeks Academy</a>
       </div>
     </div>
 
-    <!-- Script externo -->
+    
     <script src="app.js"></script>
   </body>
 </html>
